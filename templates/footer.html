@@ -1,0 +1,27 @@
+
+
+{% block footer %}
+
+<!-- start of footer -->
+<footer class="bg-light text-center text-lg-start mt-5" role="contentinfo" aria-label="Footer">
+    <div class="p-4">
+        <div class="row">
+            <div class="col-lg-4 col-md-12 ms-auto">
+                <h5>Contact Us</h5>
+                <p>Email: <a href="mailto:infoRGYM@gmail.com">infoRGYM@gmail.com</a></p>
+                <p>Follow us on:</p>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><img src="./Photos/facebook_icon.png" alt="facebook" style="vertical-align:bottom-right" width="30" height="30"></a>|
+                <a href="https://x.com" target="_blank" rel="noopener noreferrer"><img src="./Photos/x_icon.jpg" alt="X" style="vertical-align:bottom-right" width="30" height="30"></a>|
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><img src="./Photos/instagram_icon.png" alt="instagram" style="vertical-align:bottom-right" width="30" height="30"></a>|
+                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer"><img src="./Photos/youtube_icon.png" alt="youtube" style="vertical-align:bottom-right" width="30" height="30">
+            </div>
+        </div>
+    </div>
+        <div class="text-center p-3" id="footer-links" role="navigation" aria-label="Footer links">
+            <a href="{% static 'files/Tactical Privacy Policy.txt' %}" download>Privacy Policy</a> | 
+            <a href="{% static 'files/Tactical Terms of Service.txt' %}" download>Terms of Service</a>
+            <p>© 2025 RADIOACTIVE GYM All Rights Reserved.</p>
+        </div>
+</footer>
+
+{% endblock %}
