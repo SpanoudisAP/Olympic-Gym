@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+
+<!--Navbar-->
+{% block navbar %}
+    {% include "navbar.html" %}
+{% endblock %}
+
+
+<!--Main Content-->
+{% block content %}
+<div class="container my-5">
+    <h2>Profile</h2>
+<!-- User information -->
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+<!-- Link to update profile -->
+    <p>
+        <a href="{% url 'update_profile' %}">Update your profile</a>
+    </p>
+
+    <p>
+        Check <a href="{% url 'order_history' %}">Order History</a>.
+    </p>
+</div>
+{% endblock %}
+<!--ends here-->
+
+
+<!--Footer-->
+{% block footer %}
+    {% include "footer.html" %}
+{% endblock %}

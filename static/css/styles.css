@@ -1,0 +1,57 @@
+body {
+    
+    background-image: url(./images/OlympicGym.png); /* Background image */
+    background-size: contain;
+    background-position: center;
+    background-repeat: repeat;
+    height: 70%;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+    padding-top: 70px; /* Adjust to the navbar height */
+}
+.container {
+    background-color: rgba(223, 117, 117, 0.7);
+    padding: 2%;
+}
+
+body.dark-mode {
+    background-color: #443434; /* Dark mode background */
+    color: white; /* Dark mode text color */
+}
+body.dark-mode .container {
+    background-color: rgba(105, 47, 47, 0.7); /* Dark mode container */
+}
+.navbar-dark-mode {
+    background-color: #443434; /* Dark background for navbar */
+    color: white; /* Text color for dark navbar */
+}/* Dark Mode Styles for the modal*/
+
+.dark-mode .modal-content {
+    background-color: #443434; /* Dark background */
+    color: #ffffff; /* Light text */
+}
+
+.dark-mode .modal-header {
+    border-bottom: 1px solid #443434; /* Darker border for header */
+}
+
+body, .navbar, .modal-content, footer {
+    transition: background-color 0.3s, color 0.3s;
+}
+.badge {
+    color: black !important; /* Force text to be black */
+}
+.card-img-top {
+    transition: transform 0.3s ease-in-out;
+}
+
+.card-img-top:hover {
+    transform: scale(1.2);
+}
+video {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+}
+
+video:hover {
+    transform: scale(1.05);
+}
