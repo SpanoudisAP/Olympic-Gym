@@ -1,6 +1,6 @@
 body {
     
-    background-image: url(./images/OlympicGym.png); /* Background image */
+    background-image: url "{% static 'images/OlympicGym.png' %}" ; /* Background image */
     background-size: contain;
     background-position: center;
     background-repeat: repeat;

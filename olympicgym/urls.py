@@ -23,7 +23,7 @@ from workout import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('workout/', include('workout.urls')),
+    path('workout/', include('workout.urls')), # workout
     path('', views.home, name='home' ), # home
     path('register/', register_request, name="register"), # register 
     path('profile/', profile, name="profile"),  # profile  

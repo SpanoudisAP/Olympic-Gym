@@ -1,0 +1,50 @@
+{% load static %}
+
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top p-2" role="navigation" aria-label="Main navigation"> <!-- Start of Navigation bar-->
+    <a class="navbar-brand" href="{% url 'home' %}" aria-label="Olympic Gym Homepage">
+        <img src="{% static 'images/Olympic_gym_kettlebell-removebg.png' %}" alt="Company Logo" style="height: 40px; vertical-align: middle;">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'index' %}">Workout</a>
+            </li>
+            <!--Links for Registered Users-->
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                </li>
+                {% if user.is_superuser %}
+                <!-- Admin Link -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/">Admin Dashboard</a>
+                </li>
+                {% elif user.is_staff %}
+                <!-- Staff Link -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'staff_portal' %}">Staff Portal</a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout <i class="bi bi-box-arrow-right"></i></a>
+                </li>
+            {% else %} <!--Login Link-->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login <i class="bi bi-box-arrow-in-right"></i></a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <button id="toggleButton" class="btn btn-light ml-3" style="position: relative;" aria-label="Toggle dark mode"> <!--Dark mode-->
+        <img src="{% static 'images/day.png' %}" style="vertical-align:bottom-right" width="30" height="30" alt="Dark Mode">
+    </button>
+
+</nav>
+{% endblock %}

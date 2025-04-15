@@ -1,0 +1,80 @@
+
+{% load static %}<!-- Load static -->
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- follow the screen-width of the device -->
+    <title>Olympic Gym</title>
+    <link rel="icon" href="{% static 'images/Olympic_gym_kettlebell-removebg.png' %}">  <!-- This creates the icon in the title of the page -->
+
+    <!-- Basic SEO Meta Tags -->
+    <meta name="description" content="Olympic Gym is the best way to get in to shape">
+    <meta name="keywords" content="Gym, Olympic Gym, fitness, workout, body of the gods, weight lifting, pilates">
+    <meta name="author" content="Olympic Gym">
+
+    <!-- Open Graph Meta Tags for Social Media -->
+    <meta property="og:title" content="Olympic Gym">
+    <meta property="og:description" content="Olymic Gym is the Gym of the GODS. Get trained by Gods and Demigods best gym you could wish for.">
+    <meta property="og:image" content="{% static 'images/Olympic_gym_kettlebell-removebg.png' %}">
+    <meta property="og:url" content="https://www.Olympic_Gym.com">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Cards Meta Tags -->
+    <meta name="twitter:title" content="Olympic Gym">
+    <meta name="twitter:description" content="Olymic Gym is the Gym of the GODS. Get trained by Gods and Demigods best gym you could wish for.">
+    <meta name="twitter:image" content="{% static 'images/Olympic_gym_kettlebell-removebg.png' %}">
+    <meta name="twitter:card" content="summary_large_image">
+
+   
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet"> <!-- Link to Bootstrap Icons -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">  <!-- Link to the styles.css file -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">    <!-- Bootstrap CSS -->
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon"> <!-- Favicon -->
+    <link rel="canonical" href="https://www.Olympic_Gym.com">    <!-- Canonical Link (for SEO purposes) -->
+</head>
+
+<body>
+
+    <!-- Navbar Block -->
+    {% block navbar %}
+    {% endblock %}
+
+    <!-- Main Content Block -->
+    {% block body %}
+    {% endblock %}
+
+    <div id="content" name="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- Footer Block -->
+    {% block footer %}
+    {% endblock %}
+
+     {% if messages %}
+        <script id="django-messages" type="application/json">
+            [
+                {% for message in messages %}
+                    {
+                        "tags": "{{ message.tags }}",
+                        "text": "{{ message|escapejs }}"
+                    }{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            ]
+        </script>
+    {% endif %}
+
+<!-- SweetAlert2 Inclusion -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- Link to SweetAlert messages script -->
+    <script src="{% static 'js/sweetalert-messages.js' %}"></script>
+
+    <!-- Bootstrap JS and Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

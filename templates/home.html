@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% load static %} <!-- Load static -->
+
+
+<!--Navbar-->
+{% block navbar %}
+    {% include "navbar.html" %}
+{% endblock %}
+
+<!-- Main title-->
+{% block body %}
+
+<div class="container text-center"> 
+    <a href={% url 'index' %} >
+        <h1 class=" title text-center " >  
+            <img src= "{% static 'images/Olympic gym kettlebell.png'%}" alt="Olympic Gym">
+        </h1>
+    </a>
+</div>
+{% endblock %}
+
+
+<!--Footer-->
+{% block footer %}
+    {% include "footer.html" %}
+{% endblock %}
