@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import AuthenticationForm, UserChangeForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.views.decorators.cache import cache_control
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
@@ -17,9 +17,9 @@ def register_request(request):
         if form.is_valid():
             user = form.save()
             print("User created:", user)  # Creation of the user
-            messages.success(request, f"User Created.")
+            messages.success(request, f"User has been Created. Welcome to GODHOOD!")
             login(request, user)
-            return redirect("/products")
+            return redirect("/workout")
         else:
             print(" Errors:", form.errors)  # Error in the creation of the user
     else:
@@ -31,7 +31,7 @@ def register_request(request):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def login_request (request):
     if request.user.is_authenticated:
-        return redirect("/products")
+        return redirect("/workout")
 
     if request.method == "POST":
         form = AuthenticationForm (request, data=request.POST)
@@ -41,8 +41,8 @@ def login_request (request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                messages.info(request, f"Welcome {username}.")
-                return redirect("/products")
+                messages.info(request, f"Welcome {username}!!")
+                return redirect("/workout")
             else: 
                 messages.error(request, "Invalid username or password.")
     else: 
@@ -54,7 +54,7 @@ def login_request (request):
 def logout_request (request):
     logout(request)
     request.session.flush()  # Clears data
-    messages.success(request, "You have logged out.")
+    messages.success(request, "You have logged out. The GODS look down upon you!!")
     return redirect("/login")
 
 
@@ -85,7 +85,7 @@ def update_profile(request):
             messages.success(request, 'Profile has been updated successfully!')
             return redirect('profile')
         else:
-            messages.error(request, 'You have made an error correct it below.')
+            messages.error(request, 'You have made an error make a correction below.')
     else:
         form = userprofileupdateform(instance=request.user)
     return render(request, 'register/update_profile.html', {'form': form})

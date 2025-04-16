@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+<!--Navbar-->
+{% block navbar %}
+    {% include "navbar.html" %}
+{% endblock %}
+
+<!--Main Content-->
+{% block body %}
+    <!-- Create a Workout List for sorting them. -->
+    <div class="container text-center">
+        <h1>Workout List</h1>
+        <form method="get">
+            <label>Type:</label>
+            <select name="type">
+                <option value="">All</option>
+                <option value="cardio">Cardio</option>
+                <option value="strength">Strength</option>
+                <option value="flexibility">Flexibility</option>
+                <option value="balance">Balance</option>
+            </select>
+
+            <label>Minimum Duration:</label>
+            <input type="number" name="min_duration">
+
+            <label>Maximum Duration:</label>
+            <input type="number" name="max_duration">
+
+            <label>Difficulty (1-5):</label>
+            <input type="number" name="difficulty" min="1" max="5">
+
+            <button type="submit">Filter</button>
+            <button><a href="{% url 'create_workout' %}"> + Add New Workout</a></button> <!-- Link for the Creat a Workout-->
+        </form>
+
+        <ul class="container text-center">
+            {% for workout in workout %}
+                <li>
+                    {{ workout.name }} | {{ workout.type }} | {{ workout.duration }} min | Difficulty: {{ workout.get_difficulty_display }}
+                </li>
+            {% empty %}
+                <li>There is no workout found.</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+
+
+<!--Footer-->
+{% block footer %}
+    {% include "footer.html" %}
+{% endblock %}

@@ -1,9 +1,11 @@
 from django.urls import path
 from . import views
+from .views import workout_list, create_workout
 
 urlpatterns = [
-	path('', views.workout, name="workout"),
-    path("", views.index, name="index"),  # Page url
+	path("", views.index, name="index"), 
+    path('workout_list/', workout_list, name='workout_list'),
+    path('create_workout/', create_workout, name='create_workout'),
 ]
 
     
