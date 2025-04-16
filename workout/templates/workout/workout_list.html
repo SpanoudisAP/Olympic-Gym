@@ -13,6 +13,10 @@
     <div class="container text-center">
         <h1>Workout List</h1>
         <form method="get">
+            
+            <label>Search:</label>
+            <input type="text" name="s" placeholder="Search workouts by name">
+
             <label>Type:</label>
             <select name="type">
                 <option value="">All</option>
@@ -38,10 +42,10 @@
         <ul class="container text-center">
             {% for workout in workout %}
                 <li>
-                    {{ workout.name }} | {{ workout.type }} | {{ workout.duration }} min | Difficulty: {{ workout.get_difficulty_display }}
+                    {{ workout.custom_name }} | {{ workout.type }} | {{ workout.duration }} min | Difficulty: {{ workout.get_difficulty_display }}
                 </li>
             {% empty %}
-                <li>There is no workout found.</li>
+                <li> There is no workout found.</li>
             {% endfor %}
         </ul>
     </div>

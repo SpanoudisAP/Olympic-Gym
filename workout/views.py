@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from .forms import WorkoutForm
 from .models import Workout
+from django.db.models import Q
 
 # Create your views here.
 
@@ -20,16 +21,19 @@ def index(request):
     return render(request, 'workout/workout.html')
 
 #Here starts a workout filtering
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+
 def workout_list(request):
     workout = Workout.objects.all()
     
     # Filtering
+    query = request.GET.get('s')
     workout_type = request.GET.get('type')
     min_duration = request.GET.get('min_duration')
     max_duration = request.GET.get('max_duration')
     difficulty = request.GET.get('difficulty')
 
+    if query:
+        workout = workout.filter( Q(custom_name__icontains=query))
     if workout_type:
         workout = workout.filter(type=workout_type)
     if min_duration:
@@ -40,6 +44,9 @@ def workout_list(request):
         workout = workout.filter(difficulty=difficulty)
 
     return render(request, 'workout/workout_list.html', {'workout': workout})
+
+
+
 
 # Here starts the form for the workout
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
