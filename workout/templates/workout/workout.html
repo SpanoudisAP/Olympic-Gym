@@ -10,6 +10,27 @@
   <!-- Main Content Block -->
   {% block body %}
   
+    <div class="container mt-1">
+      <h3 class="text-center mb-4" style="background-color: rgba(240, 248, 255, 0.5);">Start your workout Now for the Olympic Body you would like!</h3>
+      <div class="row g-4 justify-content-center align-items-center">
+          <div class="col-md-6 col-lg-4">
+              <div class="card text-center">
+
+                  <img src="{% static 'images/Olympic gym kettlebell.png' %}" class="card-img-top mx-auto mt-3" alt="Kettlebell " style="width: 400px; height: auto;">
+                  
+              </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card text-center">
+              <a href="{% url 'workout_list' %}">
+                <h3> Workout List </h3>
+                <img src="{% static 'images/WeneedYou.png' %}" class="card-img-top mx-auto mt-3" alt="Kettlebell " style="width: 400px; height: auto;">
+              </a>
+            </div>
+          </div>
+      </div>
+  </div>
+
 
   {% endblock %}
 

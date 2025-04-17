@@ -11,7 +11,6 @@ class Workout(models.Model):
         ('strength', 'Strength'),
         ('flexibility', 'Flexibility'),
         ('balance', 'Balance'),
-
     ]
 
     DIFFICULTY_LEVELS = [
@@ -20,15 +19,13 @@ class Workout(models.Model):
         (2, 'Easy'),
         (3, 'Moderate'),
         (4, 'Hard'),
-        (5, 'Advanced'),
-        
+        (5, 'Advanced'),   
     ]
 
     custom_name = models.CharField(max_length=50, blank=True, null=True) # To add a Name for the workout 
     type = models.CharField(max_length=20, choices=WORKOUT_TYPES) # choose a type from the options 
     duration = models.PositiveIntegerField(help_text="Duration in minutes") #Duration of the workout
     difficulty = models.IntegerField(choices=DIFFICULTY_LEVELS) # Difficulty level
-
     likes = models.PositiveIntegerField(default=0) # Like 
     dislikes = models.PositiveIntegerField(default=0) # Dislike 
 
@@ -50,5 +47,5 @@ def __str__(self):
     return f"{self.user} voted {self.vote} on {self.workout}"
 
 
-    def __str__(self):
-        return self.name
+def __str__(self):
+    return self.name

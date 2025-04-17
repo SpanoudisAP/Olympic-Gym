@@ -42,14 +42,22 @@
         <ul class="container text-center">
             {% for workout in workout %}
                 <li>
-                    {{ workout.custom_name }} | {{ workout.type }} | {{ workout.duration }} min | Difficulty: {{ workout.get_difficulty_display }}
+                    {{ workout.custom_name }} | {{ workout.type }} | {{ workout.duration }} min | Difficulty: {{ workout.get_difficulty_display }} 
                   
                     Likes: {{ workout.likes }} 
-                    <a href="{% url 'like_workout' workout.id %}">👍</a>
+                    <a href="{% url 'vote_workout' workout.id 'like' %}">👍</a>
                   
                     Dislikes: {{ workout.dislikes }} 
-                    <a href="{% url 'dislike_workout' workout.id %}">👎</a>
+                    <a href="{% url 'vote_workout' workout.id 'dislike' %}">👎</a>
                     
+                    {% if workout.id in user_votes %}
+                        {% if user_votes.workout.id == 'like' %}
+                            <span style="color: green;">You liked this</span>
+                        {% elif user_votes.workout.id == 'dislike' %}
+                            <span style="color: red;">You disliked this</span>
+                        {% endif %}
+                    {% endif %}
+
                   </li>
             {% empty %}
                 <li> There is no workout found.</li>

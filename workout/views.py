@@ -1,7 +1,6 @@
-from django.shortcuts import render,redirect,get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.cache import cache_control
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.contrib import messages
 from .forms import WorkoutForm
 from .models import Workout, WorkoutVote
 from django.db.models import Q
@@ -26,6 +25,7 @@ def workout_list(request):
     workout = Workout.objects.all()
     
     # Filtering
+
     query = request.GET.get('s')
     workout_type = request.GET.get('type')
     min_duration = request.GET.get('min_duration')
@@ -33,7 +33,7 @@ def workout_list(request):
     difficulty = request.GET.get('difficulty')
 
     if query:
-        workout = workout.filter( Q(custom_name__icontains=query))
+        workout = workout.filter(Q(custom_name__icontains=query))
     if workout_type:
         workout = workout.filter(type=workout_type)
     if min_duration:
@@ -42,31 +42,23 @@ def workout_list(request):
         workout = workout.filter(duration__lte=max_duration)
     if difficulty:
         workout = workout.filter(difficulty=difficulty)
+        user_votes = {}
+    if request.user.is_authenticated:
+        votes = WorkoutVote.objects.filter(user=request.user)
+        user_votes = {vote.workout_id: vote.vote for vote in votes}
 
-    return render(request, 'workout/workout_list.html', {'workout': workout})
+    return render(request, 'workout/workout_list.html', { 'workout': workout, 'user_votes': user_votes})
 
 
-# Like
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def like_workout(request, workout_id):
-    workout = get_object_or_404(Workout, id=workout_id)
-    workout.likes += 1
-    workout.save()
-    return redirect('workout_list')
-
-# Dislike 
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def dislike_workout(request, workout_id):
-    workout = get_object_or_404(Workout, id=workout_id)
-    workout.dislikes += 1
-    workout.save()
-    return redirect('workout_list')
 
 # Like/dISLIKE 1 per user
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required
 def vote_workout(request, workout_id, vote_type):
     workout = get_object_or_404(Workout, id=workout_id)
+
+    if vote_type not in ['like', 'dislike']:
+        return redirect('workout_list')
+
     vote, created = WorkoutVote.objects.get_or_create(user=request.user, workout=workout)
 
     if vote.vote != vote_type:
