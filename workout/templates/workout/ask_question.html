@@ -13,12 +13,13 @@
     <div class="container mt-3">
 
         <h2 class="text-center mb-4" style="background-color: rgba(240, 248, 255, 0.5);">Ask a Trainer</h2>
-        <form method="post">
+        <form class="container m-3" method="post">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit" class="rounded">Submit Question</button>
         </form>
 
+        <button class="rounded"><a href="{% url 'question_list' %}">View Answers </a></button>
     </div>
 
 

@@ -16,17 +16,17 @@
       <div class="row g-4 justify-content-center align-items-center">
 
         {% if user.is_authenticated %}
-        <div class="col-md-6 col-lg-4">
+        <div class="col-md-6 col-lg-4 m-3">
             <div class="card text-center">
-              <a href="{% url 'create_workout' %}">
-                <h3> Create a Workout</h3>
+              <a href="{% url 'ask_question' %}">
+                <h3> Ask Questions to the Trainers</h3>
                 <img src="{% static 'images/Olympic gym kettlebell.png' %}" class="card-img-top mx-auto mt-3" alt="Kettlebell " style="width: 400px; height: auto;">
               </a>
             </div>
         </div>     
         {% endif %}
 
-        <div class="col-md-6 col-lg-4">
+        <div class="col-md-6 col-lg-4 m-3">
           <div class="card text-center">
             <a href="{% url 'workout_list' %}">
               <h3> Workout List </h3>

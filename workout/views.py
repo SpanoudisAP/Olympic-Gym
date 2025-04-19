@@ -102,12 +102,12 @@ def ask_question(request):
             return redirect('question_list')
     else:
         form = TrainerQuestionForm()
-    return render(request, 'questions/ask_question.html', {'form': form})
+    return render(request, 'workout/ask_question.html', {'form': form})
 
 
 def question_list(request):
     questions = TrainerQuestion.objects.all().order_by('-created_at')
-    return render(request, 'questions/question_list.html', {'questions': questions})
+    return render(request, 'workout/question_list.html', {'questions': questions})
 
 # Staff Stuff happen here do not look 
 
@@ -202,4 +202,4 @@ def answer_question(request, pk):
             question.answered_at = now()
             question.save()
             return redirect('question_list')
-    return render(request, 'questions/answer_question.html', {'question': question})
+    return render(request, 'workout/answer_question.html', {'question': question})
