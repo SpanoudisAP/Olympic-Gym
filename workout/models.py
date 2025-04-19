@@ -30,6 +30,13 @@ class Workout(models.Model):
     likes = models.PositiveIntegerField(default=0) # Like 
     dislikes = models.PositiveIntegerField(default=0) # Dislike 
     exercises = models.ManyToManyField(Exercise, related_name='workouts') # insering Exercises
+
+    def __str__(self):
+        return self.custom_name or f"{self.get_type_display()} Workout ({self.get_difficulty_display()})"
+
+    class Meta:
+        verbose_name = "Workout"
+        verbose_name_plural = "Workouts"
     
 
 class WorkoutVote(models.Model):

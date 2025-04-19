@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+  <!-- Navbar Block -->
+  {% block navbar %}
+    {% include "navbar.html" %}
+  {% endblock %}
+
+    <!-- Main Content Block -->
+  {% block body %}
+
+    <div class=" container text-center my-5">
+        <h2 class="text-center mb-4" style="background-color: rgba(240, 248, 255, 0.5);">My Training Sessions</h2>
+
+        {% for session in sessions %}
+        <div>
+            <h3>{{ session.workout.custom_name }} - {{ session.date|date:"M d, Y H:i" }}</h3>
+            <p>{{ session.notes }}</p>
+            <ul>
+            {% for log in session.exercise_logs.all %}
+                <li>{{ log.exercise.name }} - {{ log.sets }}x{{ log.reps }} @ {{ log.weight }}kg</li>
+            {% endfor %}
+            </ul>
+        </div>
+        {% empty %}
+        <p>You haven't logged any sessions yet.</p>
+        {% endfor %}
+        
+    </div>
+{% endblock %}
+
+<!-- Footer Block -->
+{% block footer %}
+  {% include "footer.html" %}
+{% endblock %}

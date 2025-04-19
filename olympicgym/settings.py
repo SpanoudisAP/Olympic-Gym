@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'register',
     'workout',
     'exercises',
+    'training',
     'crispy_forms',
     'crispy_bootstrap4',
     'django.contrib.admin',
