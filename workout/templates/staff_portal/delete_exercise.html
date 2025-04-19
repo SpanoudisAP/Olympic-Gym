@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+  <!-- Navbar Block -->
+  {% block navbar %}
+    {% include "navbar.html" %}
+  {% endblock %}
+
+    <!-- Main Content Block -->
+  {% block body %}
+
+    <div class=" container text-center my-5">
+      <h2 class="text-center mb-4" style="background-color: rgba(240, 248, 255, 0.5);">Delete Exercise</h2>
+      <p>Are you sure you want to delete "<strong>{{ exercise.name }}</strong>"?</p>
+      
+      <form method="post">
+          {% csrf_token %}
+          <button type="submit" class="rounded">Yes, delete it</button>
+          <button class="rounded"><a href="{% url 'manage_exercises' %}" class="ml-4 text-gray-600">Cancel</a></button>
+      </form>
+    </div>
+    
+  {% endblock %}
+
+  <!-- Footer Block -->
+  {% block footer %}
+    {% include "footer.html" %}
+  {% endblock %}

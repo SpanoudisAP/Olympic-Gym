@@ -30,6 +30,7 @@ def register_request(request):
 # Login
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def login_request (request):
+
     if request.user.is_authenticated:
         return redirect("/workout")
 
@@ -65,6 +66,7 @@ def logout_request (request):
 @login_required
 def profile(request):
     return render(request, 'register/profile.html', {'user': request.user})
+    
 
 
 

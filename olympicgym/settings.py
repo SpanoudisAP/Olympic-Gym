@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'register',
     'workout',
+    'exercises',
     'crispy_forms',
     'crispy_bootstrap4',
     'django.contrib.admin',

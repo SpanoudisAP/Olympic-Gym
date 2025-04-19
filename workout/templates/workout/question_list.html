@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+  <!-- Navbar Block -->
+  {% block navbar %}
+    {% include "navbar.html" %}
+  {% endblock %}
+
+  <!-- Main Content Block -->
+  {% block body %}
+  
+    <div class="container mt-3">
+
+        <h2 class="text-center mb-4" style="background-color: rgba(240, 248, 255, 0.5);">Trainer Q&A</h2>
+
+        <ul>
+            {% for q in questions %}
+            <li>
+                <strong>{{ q.user.username }} asked:</strong> {{ q.question }} <br>
+                {% if q.answer %}
+                    <strong>Trainer answered:</strong> {{ q.answer }}
+                {% elif user.is_staff %}
+                <button type="submit" class="rounded"><a href="{% url 'answer_question' q.pk %}">Answer this question</a></button>
+                {% else %}
+                    <em>Awaiting trainer response...</em>
+                {% endif %}
+            </li>
+            <hr>
+            {% endfor %}
+        </ul>
+        
+
+    </div>
+
+
+  {% endblock %}
+
+ <!-- Footer Block -->
+  {% block footer %}
+    {% include "footer.html" %}
+  {% endblock %}

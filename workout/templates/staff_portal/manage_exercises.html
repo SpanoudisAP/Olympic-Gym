@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+  <!-- Navbar Block -->
+  {% block navbar %}
+    {% include "navbar.html" %}
+  {% endblock %}
+
+  <!-- Main Content Block -->
+  {% block body %}
+    <div class=" container text-center my-5">
+        <h2 style="background-color: rgba(240, 248, 255, 0.5)">Manage Exercises</h2>
+        <table class=" container table-auto w-full text-center border-collapse">
+            <tr class="bg-gray-100">
+                <th class="border px-4 py-2">Name</th>
+                <th class="border px-4 py-2">Equipment</th>
+                <th class="border px-4 py-2">Description</th>
+                <th class="border px-4 py-2">Actions</th>
+            </tr>
+
+            {% for exercise in exercises %}
+            
+            <tr class="hover:bg-gray-50">
+                <td class="border px-4 py-2">{{ exercise.name }}</td>
+                <td class="border px-4 py-2">{{ exercise.equipment }}</td>
+                <td class="border px-4 py-2">{{ exercise.description }}</td>
+                <td class="border px-4 py-2">
+                    <button class="rounded"><a href="{% url 'edit_exercise' exercise.id %}">Edit</a></button>
+                    <button class="rounded"><a href="{% url 'delete_exercise' exercise.id %}">Delete</a></button>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <button class="rounded"><a href="{% url 'create_exercise' %}">+ Add New Exercise</a></button >
+    </div>
+  {% endblock %}
+
+ <!-- Footer Block -->
+  {% block footer %}
+    {% include "footer.html" %}
+  {% endblock %}

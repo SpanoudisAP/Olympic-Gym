@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+    <!-- Navbar Block -->
+    {% block navbar %}
+    {% include "navbar.html" %}
+    {% endblock %}
+
+    <!-- Main Content Block -->
+    {% block body %}
+
+        <div class="container text-center my-5">
+
+            <h2 style="background-color: rgba(240, 248, 255, 0.5)">Manage Workouts</h2>
+
+            <button class="rounded">
+                <a href="{% url 'create_workout' %}" >+ Add New Workout</a>
+            </button>
+            
+            <table class=" container table-auto w-full text-center border-collapse">
+
+                <thead>
+                    <tr class="bg-gray-100">
+                        <th class="border px-4 py-2">Name</th>
+                        <th class="border px-4 py-2">Type</th>
+                        <th class="border px-4 py-2">Duration (min)</th>
+                        <th class="border px-4 py-2">Difficulty</th>
+                        <th class="border px-4 py-2">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for workout in workouts %}
+                        <tr class="hover:bg-gray-50">
+                            <td class="border px-4 py-2">{{ workout.custom_name }}</td>
+                            <td class="border px-4 py-2">{{ workout.type }}</td>
+                            <td class="border px-4 py-2">{{ workout.duration }}</td>
+                            <td class="border px-4 py-2">{{ workout.get_difficulty_display }}</td>
+                            <td class="border px-4 py-2 space-x-2">
+                                <button class="rounded"><a href="{% url 'edit_workout' workout.id %}" class="text-blue-600 hover:underline">Edit</a> </button>
+                                <button class="rounded"><a href="{% url 'delete_workout' workout.id %}" class="text-red-600 hover:underline"
+                                onclick="return confirm('Are you sure you want to delete this workout?');">Delete</a> </button>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center py-4">No workouts available.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    {% endblock %}
+
+    <!-- Footer Block -->
+    {% block footer %}
+        {% include "footer.html" %}
+    {% endblock %}

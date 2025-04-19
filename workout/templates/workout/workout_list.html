@@ -11,12 +11,12 @@
 {% block body %}
     <!-- Create a Workout List for sorting them. -->
     <div class="container text-center">
-        <h1>Workout List</h1>
+        <h1 style="background-color: rgba(240, 248, 255, 0.5)" >Workout List</h1>
         <form method="get">
-            
-            <label>Search:</label>
-            <input type="text" name="s" placeholder="Search workouts by name">
 
+            <label>Search:</label>
+            <input type="text" name="s" placeholder="Search workout name">
+        
             <label>Type:</label>
             <select name="type">
                 <option value="">All</option>
@@ -28,18 +28,22 @@
 
             <label>Minimum Duration:</label>
             <input type="number" name="min_duration">
-
+            
             <label>Maximum Duration:</label>
             <input type="number" name="max_duration">
 
             <label>Difficulty (1-5):</label>
             <input type="number" name="difficulty" min="1" max="5">
 
-            <button type="submit">Filter</button>
-            <button ><a href="{% url 'create_workout' %}"> + Add New Workout</a></button> <!-- Link for the Creat a Workout-->
+            <button type="submit" class="btn btn-primary" >Filter</button>
+            
+            {% if user.is_authenticated %}
+                <button><a href="{% url 'create_workout' %}">+ Add New Workout</a></button>
+            {% endif %}
+            
         </form>
 
-        <ul class="container text-center">
+        <ul class="container text-center"> <!-- Votes for the Like/Dislike -->
             {% for workout in workout %}
                 <li>
                     {{ workout.custom_name }} | {{ workout.type }} | {{ workout.duration }} min | Difficulty: {{ workout.get_difficulty_display }} 
@@ -58,7 +62,28 @@
                         {% endif %}
                     {% endif %}
 
-                  </li>
+                    <table class="m-2" > <!-- Exercises Table -->
+                        {% for exercise in workout.exercises.all %}
+                        <tr>
+                            <th>Exercise:</th>
+                            <td>{{ exercise.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Equipment:</th>
+                            <td>{{ exercise.equipment }}</td>
+                        </tr>
+                        <tr>
+                            <th>Description:</th>
+                            <td>{{ exercise.description }}</td>
+                        </tr>
+                        {% empty %}
+                            <tr>
+                            <td colspan="3">No exercises added to this workout.</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+
+                </li>
             {% empty %}
                 <li> There is no workout found.</li>
             {% endfor %}

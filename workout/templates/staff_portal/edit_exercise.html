@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+  <!-- Navbar Block -->
+  {% block navbar %}
+    {% include "navbar.html" %}
+  {% endblock %}
+
+    <!-- Main Content Block -->
+  {% block body %}
+
+    <div class=" container text-center my-5">
+
+      <h2 class="text-center mb-4" style="background-color: rgba(240, 248, 255, 0.5);">Edit Exercise: {{ exercise.name }}</h2>
+
+      <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="rounded">Save Changes</button>
+          <button class="rounded"><a href="{% url 'manage_exercises' %}" class="ml-4 text-gray-600">Cancel</a></button>
+      </form>
+    </div>
+    
+  {% endblock %}
+
+  <!-- Footer Block -->
+  {% block footer %}
+    {% include "footer.html" %}
+  {% endblock %}

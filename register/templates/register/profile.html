@@ -11,15 +11,18 @@
 
 <!--Main Content-->
 {% block content %}
-<div class="container my-5">
+<div class="container text-center my-5">
     <h2>Profile</h2>
-<!-- User information -->
-    <p><strong>Username:</strong> {{ user.username }}</p>
+
+    <div style="background-color: rgba(240, 248, 255, 0.5)">
+
+    <p><strong>Username:</strong> {{ user.username }}</p><!-- User information -->
     <p><strong>Email:</strong> {{ user.email }}</p>
-<!-- Link to update profile -->
-    <p>
-        <a href="{% url 'update_profile' %}">Update your profile</a>
-    </p>
+
+    </div>
+    <button>
+        <a href="{% url 'update_profile' %}">Update your profile</a><!-- Link to update profile -->
+    </button>
 </div>
 {% endblock %}
 <!--ends here-->

@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.cache import cache_control
-from django.contrib.auth.decorators import login_required, user_passes_test
-from .forms import WorkoutForm
-from .models import Workout, WorkoutVote
+from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
+from .forms import WorkoutForm, ExerciseForm, TrainerQuestionForm
+from .models import Workout, WorkoutVote, Exercise, TrainerQuestion
 from django.db.models import Q
+from django.utils.timezone import now
 
 # Create your views here.
 
@@ -23,6 +25,8 @@ def index(request):
 
 def workout_list(request):
     workout = Workout.objects.all()
+    
+    user_votes = {}
     
     # Filtering
 
@@ -85,14 +89,117 @@ def create_workout(request):
         form = WorkoutForm()
     return render(request, 'workout/create_workout.html', {'form': form})
 
-# Here starts the staff stuff :)
 
-def staff_required(user):
-    return user.is_staff
+# ask questions
+@login_required
+def ask_question(request):
+    if request.method == 'POST':
+        form = TrainerQuestionForm(request.POST)
+        if form.is_valid():
+            question = form.save(commit=False)
+            question.user = request.user
+            question.save()
+            return redirect('question_list')
+    else:
+        form = TrainerQuestionForm()
+    return render(request, 'questions/ask_question.html', {'form': form})
 
 
-#Staff portal view
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-@user_passes_test(staff_required)
+def question_list(request):
+    questions = TrainerQuestion.objects.all().order_by('-created_at')
+    return render(request, 'questions/question_list.html', {'questions': questions})
+
+# Staff Stuff happen here do not look 
+
+
+@staff_member_required
 def staff_portal(request):
-    return render(request, 'staff/portal.html')
+    return render(request, 'staff_portal/home.html')
+
+@staff_member_required
+def manage_exercises(request):
+    exercises = Exercise.objects.all()
+    return render(request, 'staff_portal/manage_exercises.html', {'exercises': exercises})
+
+
+@staff_member_required
+def manage_workouts(request):
+    workouts = Workout.objects.all()
+    return render(request, 'staff_portal/manage_workouts.html', {'workouts': workouts})
+
+
+# Told you not to look. Workout edit and delete are here
+
+#edit
+@staff_member_required
+def edit_workout(request, pk):
+    workout = get_object_or_404(Workout, pk=pk)
+    if request.method == 'POST':
+        form = WorkoutForm(request.POST, instance=workout)
+        if form.is_valid():
+            form.save()
+            return redirect('manage_workouts')
+    else:
+        form = WorkoutForm(instance=workout)
+    return render(request, 'staff_portal/edit_workout.html', {'form': form, 'workout': workout})
+
+#delete
+@staff_member_required
+def delete_workout(request, pk):
+    workout = get_object_or_404(Workout, pk=pk)
+    if request.method == 'POST':
+        workout.delete()
+        return redirect('manage_workouts')
+    return render(request, 'staff_portal/delete_workout.html', {'workout': workout})
+
+
+# Here starts the Exersises edit and delete
+
+#create
+@staff_member_required
+def create_exercise(request):
+    if request.method == 'POST':
+        form = ExerciseForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('manage_exercises')
+    else:
+        form = ExerciseForm()
+    return render(request, 'staff_portal/create_exercise.html', {'form': form})
+
+#edit
+@staff_member_required
+def edit_exercise(request, pk):
+    exercise = get_object_or_404(Exercise, pk=pk)
+    if request.method == 'POST':
+        form = ExerciseForm(request.POST, instance=exercise)
+        if form.is_valid():
+            form.save()
+            return redirect('manage_exercises')
+    else:
+        form = ExerciseForm(instance=exercise)
+    return render(request, 'staff_portal/edit_exercise.html', {'form': form, 'exercise': exercise})
+
+#delete
+@staff_member_required
+def delete_exercise(request, pk):
+    exercise = get_object_or_404(Exercise, pk=pk)
+    if request.method == 'POST':
+        exercise.delete()
+        return redirect('manage_exercises')
+    return render(request, 'staff_portal/delete_exercise.html', {'exercise': exercise})
+
+
+#questions
+@staff_member_required
+def answer_question(request, pk):
+    question = get_object_or_404(TrainerQuestion, pk=pk)
+    if request.method == 'POST':
+        answer = request.POST.get('answer')
+        if answer:
+            question.answer = answer
+            question.answered_by = request.user
+            question.answered_at = now()
+            question.save()
+            return redirect('question_list')
+    return render(request, 'questions/answer_question.html', {'question': question})

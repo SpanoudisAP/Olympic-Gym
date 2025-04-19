@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from exercises.models import Exercise
 
 # Create your models here.
 
@@ -28,7 +29,8 @@ class Workout(models.Model):
     difficulty = models.IntegerField(choices=DIFFICULTY_LEVELS) # Difficulty level
     likes = models.PositiveIntegerField(default=0) # Like 
     dislikes = models.PositiveIntegerField(default=0) # Dislike 
-
+    exercises = models.ManyToManyField(Exercise, related_name='workouts') # insering Exercises
+    
 
 class WorkoutVote(models.Model):
     VOTE_CHOICES = [
@@ -47,5 +49,14 @@ def __str__(self):
     return f"{self.user} voted {self.vote} on {self.workout}"
 
 
-def __str__(self):
-    return self.name
+
+class TrainerQuestion(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='asked_questions')
+    question = models.TextField()
+    answer = models.TextField(blank=True, null=True)
+    answered_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='answered_questions')
+    created_at = models.DateTimeField(auto_now_add=True)
+    answered_at = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return f"Q: {self.question[:50]}"

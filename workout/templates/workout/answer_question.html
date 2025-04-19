@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+  <!-- Navbar Block -->
+  {% block navbar %}
+    {% include "navbar.html" %}
+  {% endblock %}
+
+  <!-- Main Content Block -->
+  {% block body %}
+  
+    <div class="container mt-3">
+
+        <h2 class="text-center mb-4" style="background-color: rgba(240, 248, 255, 0.5);">Answer Question</h2>
+        <p><strong>User:</strong> {{ question.user.username }}</p>
+        <p><strong>Question:</strong> {{ question.question }}</p>
+        
+        <form method="post">
+            {% csrf_token %}
+            <textarea name="answer" rows="5" class="w-full border p-2"></textarea>
+            <button type="submit" class="rounded">Submit Answer</button>
+        </form>
+    </div>
+
+
+  {% endblock %}
+
+ <!-- Footer Block -->
+  {% block footer %}
+    {% include "footer.html" %}
+  {% endblock %}
