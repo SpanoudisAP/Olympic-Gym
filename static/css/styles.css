@@ -1,15 +1,14 @@
 body {
-    
-    background-image: url("{% static 'images/OlympicGym.png'%}"); /* Background image */
+    background-image: url("/static/images/OlympicGym.png"); /* Background image */
     background-size: contain;
     background-position: center;
     background-repeat: repeat;
     height: 70%;
-    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
-    padding-top: 70px; /* Adjust to the navbar height */
+    transition: background-color 0.3s, color 0.3s;/* Smooth transition */
+    padding-top: 70px;/* Adjust to the navbar height */
 }
 .container {
-    background-color: rgba(223, 117, 117, 0.7);
+    background-color: rgba(223, 117, 117, 0.7); 
     padding: 2%;
 }
 
